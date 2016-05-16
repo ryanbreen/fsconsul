@@ -1,0 +1,18 @@
+# Usage:
+# Install dapper from https://github.com/rancher/dapper
+# Run `dapper`
+
+FROM golang:1.6
+
+RUN go get \
+  github.com/Sirupsen/logrus \
+  github.com/armed/mkdirp \
+  github.com/cimpress-mcp/gosecret/api \
+  github.com/hashicorp/consul/api
+
+ENV DAPPER_SOURCE /go/src/github.com/cimpress-mcp/fsconsul
+ENV DAPPER_OUTPUT fsconsul
+ENV CGO_ENABLED 0
+WORKDIR ${DAPPER_SOURCE}
+ENTRYPOINT ["go", "build"]
+CMD ["-ldflags", "-s"]
